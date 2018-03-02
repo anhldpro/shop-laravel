@@ -65,6 +65,11 @@ Route::get('dang-nhap', [
 	'uses' => 'PageController@getLogin'
 ]);
 
+Route::post('dang-nhap', [
+	'as' => 'login',
+	'uses' => 'PageController@postLogin'
+]);
+
 Route::get('dang-ky', [
 	'as' => 'register',
 	'uses' => 'PageController@getRegister'
@@ -73,4 +78,9 @@ Route::get('dang-ky', [
 Route::post('dang-ky', [
 	'as' => 'register',
 	'uses' => 'PageController@postRegister'
+]);
+
+Route::get('dang-xuat',[
+	'as' => 'logout',
+	'uses'=> 'PageController@getLogout'
 ]);

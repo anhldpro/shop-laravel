@@ -13,6 +13,7 @@ use App\Bill;
 use App\BillDetail;
 use App\User;
 use Hash;
+use Illuminate\Support\Facades\Auth;
 
 class PageController extends Controller
 {
@@ -126,6 +127,37 @@ class PageController extends Controller
         return view('page.login');
     }
 
+    public function postLogin(Request $req){
+        $this->validate($req,
+            [
+                'email'=>'required|email',
+                'password'=>'required'
+            ],
+            [
+                'email.required'=>'Vui lòng nhập email',
+                'email.email'=>'Email không đúng định dạng',
+                'password.required'=>'Vui lòng nhập mật khẩu'
+            ]
+        );
+
+        $credentials = array('email'=>$req->email, 'password'=>$req->password);
+        if(Auth::attempt($credentials)){
+            //return redirect()->back()->with('success', 'Đăng nhập thành công');            
+            return redirect()->route('trang-chu');
+        }
+
+        /*$pwd = Hash::make($req->password);
+        $user = User::where('email', $req->email)->where('password', $pwd)->first();
+
+        if($user){
+
+        }*/
+
+        return redirect()->back()->with('errors', 'Đăng nhập không thành công');
+
+    }
+
+
     public function postRegister(Request $req){
         $this->validate($req,
             [
@@ -160,4 +192,11 @@ class PageController extends Controller
     public function getRegister(){
         return view('page.register');
     }
+
+    public function getLogout(){
+        Auth::logout();
+        return redirect()->route('trang-chu');
+    }
+
+
 }
