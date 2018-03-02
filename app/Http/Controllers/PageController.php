@@ -198,5 +198,11 @@ class PageController extends Controller
         return redirect()->route('trang-chu');
     }
 
+    public function getSearch(Request $req){
+        $product = Product::where('name', 'like', '%'.$req->key.'%')->orWhere('unit_price', $req->key)->paginate(4);
+
+        return view('page.search', compact('product'));
+    }
+
 
 }
