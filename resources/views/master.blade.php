@@ -20,6 +20,8 @@
 
 	@include('header')
 	<div class="rev-slider">
+	@include('partials.success')
+	@include('partials.errors')
 	@yield('content')
 	</div> <!-- .container -->
 
